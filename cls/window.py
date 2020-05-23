@@ -6,17 +6,15 @@ pg.init()
 os.environ["SDL_VIDEO_CENTERED"] = "1"
 
 defaults = {
-    "window": {
-        "resizable": False,
-        "title": "TopDown 0.1",
-        "size": u.getResolution(),
-        "fps": 60
-    }
+    "resizable": False,
+    "title": "TopDown 0.1",
+    "size": u.getResolution(),
+    "fps": 60
 }
 
 class Window(object):
     def __init__(self, **kwargs):
-        self.cfg = u.validateDict(kwargs, defaults["window"])
+        self.cfg = u.validateDict(kwargs, defaults)
         self.display = u.getDisplay(self.cfg["size"], self.cfg["resizable"])
         pg.display.set_caption(self.cfg["title"])
         self.clock = pg.time.Clock()
