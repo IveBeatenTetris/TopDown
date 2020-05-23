@@ -12,6 +12,7 @@ json_comments =  re.compile(
 # path related
 PATH = {
     "root": os.getcwd(),
+    "assets": os.getcwd() + "\\assets\\",
     "tilemaps": os.getcwd() + "\\assets\\tilemaps\\",
     "tilesets": os.getcwd() + "\\assets\\tilesets\\"
 }
