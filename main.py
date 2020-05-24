@@ -14,8 +14,10 @@ def main():
     while True:
         # ------------------------------ custom ------------------------------ #
         #print(app.rect)
-        app.draw(scene.tileset.tiles[2].image)
-        #app.draw(scene.tilemap)
+        #app.draw(scene.tileset)
+        #app.draw(scene.tileset.tiles[2].image)
+        app.draw(scene.tilemap)
+        #app.draw(scene.tilemap.layers[0])
         # ------------------------------ custom ------------------------------ #
         # events
         app.events

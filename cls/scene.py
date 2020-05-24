@@ -17,10 +17,27 @@ class Scene(object):
 class Tilemap(pg.Surface):
     def __init__(self, name, tileset):
         self.cfg = self.loadTileMap(name)
+        pg.Surface.__init__(self, self.cfg["size"], pg.SRCALPHA)
         self.tileset = tileset
-        pg.Surface.__init__(self, self.cfg["size"])
-        for each in self.cfg["layers"]:
-            pass
+        self.layers = self.createLayers()
+    def createLayers(self):# list
+        row_length = int(self.cfg["size"][1] / self.cfg["tilesize"][1])
+        col_length = int(self.cfg["size"][0] / self.cfg["tilesize"][0])
+        layer = pg.Surface(self.cfg["size"])
+
+        for layer in self.cfg["layers"]:
+            i = 0
+            for row in range(row_length):
+                y = self.cfg["tilesize"][0] * row
+                for col in range(col_length):
+                    x = self.cfg["tilesize"][1] * col
+
+                    data = layer["data"][i]
+                    self.blit(self.tileset.tiles[data-1].image, (x, y))
+
+                    i += 1
+
+        return layer
     def loadTileMap(self, name):# dict
         path = u.PATH["tilemaps"] + name + "\\"
         cfg = {
@@ -78,13 +95,13 @@ class Tileset(pg.Surface):
         )
 
         i = 0
-        for row in range(size[0]):
-            y = row * self.cfg["tilesize"][0]
-            for col in range(size[1]):
-                x = col * self.cfg["tilesize"][1]
+        for row in range(size[1]):
+            y = row * self.cfg["tilesize"][1]
+            for col in range(size[0]):
+                x = col * self.cfg["tilesize"][0]
 
                 config = {}
-                image = pg.Surface(self.cfg["tilesize"])
+                image = pg.Surface(self.cfg["tilesize"], pg.SRCALPHA)
                 image.blit(self.image, (-x, -y))
                 config["image"] = image
                 config["id"] = i
@@ -122,6 +139,7 @@ class Tileset(pg.Surface):
         return cfg
 class Tile(pg.sprite.Sprite):
     def __init__(self, config):
+        pg.sprite.Sprite.__init__(self)
         self.id = config["id"]
         self.image = config["image"]
         self.rect = self.image.get_rect()
