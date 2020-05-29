@@ -6,6 +6,11 @@ defaults = {
     "scene": {
         "tilemap": "test_ruin_001",
         "tileset": "default"
+    },
+    "tile": {
+		"name": "Unnamed",
+		"block": False,
+		"visible": True
     }
 }
 
@@ -24,20 +29,23 @@ class Tilemap(pg.Surface):
         row_length = int(self.cfg["size"][1] / self.cfg["tilesize"][1])
         col_length = int(self.cfg["size"][0] / self.cfg["tilesize"][0])
         layer = pg.Surface(self.cfg["size"])
+        layers = []
 
-        for layer in self.cfg["layers"]:
+        for l in self.cfg["layers"]:
             i = 0
             for row in range(row_length):
                 y = self.cfg["tilesize"][0] * row
                 for col in range(col_length):
                     x = self.cfg["tilesize"][1] * col
 
-                    data = layer["data"][i]
+                    data = l["data"][i]
                     self.blit(self.tileset.tiles[data-1].image, (x, y))
+                    layer.blit(self.tileset.tiles[data-1].image, (x, y))
 
+                    layers.append(layer)
                     i += 1
 
-        return layer
+        return layers
     def loadTileMap(self, name):# dict
         path = u.PATH["tilemaps"] + name + "\\"
         cfg = {
