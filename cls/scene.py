@@ -42,8 +42,9 @@ class Tilemap(pg.Surface):
                     self.blit(self.tileset.tiles[data-1].image, (x, y))
                     layer.blit(self.tileset.tiles[data-1].image, (x, y))
 
-                    layers.append(layer)
                     i += 1
+
+            layers.append(layer)
 
         return layers
     def loadTileMap(self, name):# dict

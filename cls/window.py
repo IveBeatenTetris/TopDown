@@ -52,3 +52,4 @@ class Window(object):
         pg.display.update()
         #self.display.fill((0, 0, 0))
         self.clock.tick(self.cfg["fps"])
+        pg.display.set_caption(self.cfg["title"] + "          " + str(self.fps))
