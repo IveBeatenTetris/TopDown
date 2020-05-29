@@ -14,7 +14,8 @@ PATH = {
     "root": os.getcwd(),
     "assets": os.getcwd() + "\\assets\\",
     "tilemaps": os.getcwd() + "\\assets\\tilemaps\\",
-    "tilesets": os.getcwd() + "\\assets\\tilesets\\"
+    "tilesets": os.getcwd() + "\\assets\\tilesets\\",
+    "entities": os.getcwd() + "\\assets\\entities\\"
 }
 
 # files & directories
@@ -106,6 +107,34 @@ def getDisplay(size, resizable=False):# pg.display.surface
         display = pg.display.set_mode(size)
 
     return display
+def getFrames(image, framesize):# list
+    """
+    return a list of frames clipped from an image.
+    'framesize' must be a tuple of 2.
+    usage:
+    frames = getFrames(spritesheet, (16, 16)).
+    """
+    frames = []
+
+    rows = int(image.get_rect().height / framesize[1])
+    cells = int(image.get_rect().width / framesize[0])
+    rect = pg.Rect((0, 0), framesize)
+
+    # running each frame
+    for row in range(rows):
+        y = row * framesize[1]
+        rect.top = y
+        for cell in range(cells):
+            x = cell * framesize[0]
+            rect.left = x
+
+            image.set_clip(rect)
+            clip = image.subsurface(image.get_clip())
+
+            frames.append(clip)
+    del(clip, rect)
+
+    return frames
 def getResolution():# tuple
     """returns full-screen size in a tuple."""
     user32 = ctypes.windll.user32

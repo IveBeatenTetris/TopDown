@@ -1,6 +1,7 @@
 #import pygame as pg
 from cls.window import *
 from cls.scene import *
+from cls.entity import *
 
 app = Window(
     size = (800, 500),
@@ -9,6 +10,9 @@ app = Window(
 scene = Scene(
     tilemap =  "test_ruin_001",
     tileset = "test_ruin1"
+)
+char = Entity(
+
 )
 def main():
     while True:
@@ -19,8 +23,9 @@ def main():
         #app.draw(scene.tilemap)
         #app.draw(scene.tilemap.layers[0])
         #app.draw(scene.tilemap.layers[1])
-        for layer in scene.tilemap.layers:
-            app.draw(layer)
+        #for layer in scene.tilemap.layers:
+            #app.draw(layer)
+        app.draw(char.image)
         # ------------------------------ custom ------------------------------ #
         # events
         app.events
