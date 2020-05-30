@@ -96,6 +96,47 @@ def createTiledMap(config, tiles):# dict
         "blocks": blocks,
         "player_start": playerstart
     }
+def drawBorder(surface, **kwargs):# pg.surface
+    """
+    draws a border on the given surface and returns it.
+    keyword-arguments are:
+        'size'  (int)           :   declares how big the line-size draws the
+                                    border.
+        'color' (tuple/list)    :   the line-color of the border requiring 3
+                                    integers to resemble a color-argument.
+        'rect'  (pg.rect/tuple/ :   if this is not given, use the surface's
+                list)               dimensions instead.
+    example:
+        config = (1, (255, 255, 255), [5, 10, 100, 25])
+    usage:
+        config = (3, (0, 0, 0))
+        surf = drawBorder(display, size=config[0], color=config[1])
+    """
+    # creating a standard-setup for the border
+    cfg = validateDict(kwargs, {
+        "size"      :   1,
+        "color"     :   (0, 0, 0),
+        "rect"      :   surface.get_rect()
+    })
+    # converting into pygame.rect if it's a list or a tuple
+    if type(cfg["rect"]) is list or type(cfg["rect"]) is tuple:
+        cfg["rect"] = pg.Rect(cfg["rect"])
+    # drawing border to the background
+    pg.draw.lines(
+        surface,
+        cfg["color"],
+        False,
+        [
+            cfg["rect"].topleft,
+            (cfg["rect"].left, cfg["rect"].height - 1),
+            (cfg["rect"].width - 1, cfg["rect"].height - 1),
+            (cfg["rect"].width - 1, cfg["rect"].top),
+            cfg["rect"].topleft,
+        ],
+        cfg["size"]
+    )
+
+    return surface
 def getDisplay(size, resizable=False):# pg.display.surface
     """
     creates a new window display and returns it. customisation possible.

@@ -19,6 +19,7 @@ class Scene(object):
         self.cfg = u.validateDict(kwargs, defaults["scene"])
         self.tileset = Tileset(self.cfg["tileset"])
         self.tilemap = Tilemap(self.cfg["tilemap"], self.tileset)
+        self.rect = self.tilemap.layers[0].get_rect()
 class Tilemap(pg.Surface):
     def __init__(self, name, tileset):
         self.cfg = self.loadTileMap(name)
