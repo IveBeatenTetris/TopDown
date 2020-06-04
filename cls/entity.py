@@ -5,7 +5,8 @@ import pygame as pg
 defaults = {
     "entity": "default",
     "size": (16, 22),
-    "border": None
+    "border": None,
+    "speed": 2
 }
 
 class Entity(pg.sprite.Sprite):
@@ -24,6 +25,7 @@ class Entity(pg.sprite.Sprite):
         self.image = self.frames[0]
         self.rect = self.image.get_rect()
         self.rect.topleft = (0, 0)
+        self.speed = self.config["speed"]
 
         if self.config["border"]:
             self.image = u.drawBorder(
@@ -31,3 +33,8 @@ class Entity(pg.sprite.Sprite):
                 size = self.config["border"][0],
                 color = self.config["border"][1]
             )
+    def move(self, axis):
+        x, y = axis
+
+        self.rect.left += x
+        self.rect.top += y

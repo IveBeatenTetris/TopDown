@@ -145,6 +145,15 @@ class Tileset(pg.Surface):
                     int(child.attrib["width"]),
                     int(child.attrib["height"])
                 )
+            elif child.tag == "tile":
+                block = False
+
+                for property in child:
+                    for prop in property:
+                        if prop.attrib["name"] == "block":
+                            block = prop.attrib["value"]
+                            
+                print(block, child.attrib["id"])
 
         return cfg
 class Tile(pg.sprite.Sprite):
